@@ -86,5 +86,5 @@ class Game:
             self.p2.score += 1
 
 if __name__ == '__main__':
-    game = Game(RandomPlayer(), HumanPlayer())
+    game = Game(ReflectPlayer(), HumanPlayer())
     game.play_game()
