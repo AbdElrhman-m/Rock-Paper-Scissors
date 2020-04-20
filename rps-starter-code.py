@@ -163,5 +163,8 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(CyclePlayer(), HumanPlayer())
+    bot = random.choice([RandomPlayer(),
+                        ReflectPlayer(),
+                        CyclePlayer()])
+    game = Game(bot, HumanPlayer())
     game.play_game()
