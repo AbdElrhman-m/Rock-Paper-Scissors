@@ -13,7 +13,7 @@ class Player:
     def __init__(self):
         super().__init__()
         self.score = 0
-
+        self.valid_moves = ["rock", "paper", "scissors"]
     def move(self):
         return 'rock'
 
@@ -22,7 +22,16 @@ class Player:
 
 class RandomPlayer(Player):
     def move(self):
-        return random.choice(["rock", "paper", "scissors"])
+        return random.choice(self.valid_moves)
+
+class HumanPlayer(Player):
+    def move(self):
+        player_move = input("Rock, paper, scissors? > ").lower()
+        if player_move in self.valid_moves:
+            return player_move
+        else:
+            return self.move()
+        
 
 def beats(one, two):
     return ((one == 'rock' and two == 'scissors') or
@@ -34,7 +43,7 @@ class Game:
     def __init__(self, p1, p2):
         self.p1 = p1
         self.p2 = p2
-        self.score = 0
+
     def play_round(self):
         move1 = self.p1.move()
         move2 = self.p2.move()
@@ -49,7 +58,7 @@ class Game:
             print(f"Round {round}:")
             self.play_round()
             self.keep_score()
-        print(f"Player 1: {self.p1.score}  Player 2: {self.p2.score}")
+        print(f"Score: Player 1: {self.p1.score}  Player 2: {self.p2.score}")
         print(" ")
         print("Game over!")
 
@@ -65,5 +74,5 @@ class Game:
             print("*************Player *Two* is the Winner************")
             self.p2.score += 1
 if __name__ == '__main__':
-    game = Game(RandomPlayer(), Player())
+    game = Game(RandomPlayer(), HumanPlayer())
     game.play_game()
