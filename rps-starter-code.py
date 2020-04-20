@@ -139,7 +139,7 @@ class Game:
             n = 3  # number of rounds
             for round in range(n):
                 print_pause(" ")
-                print_pause(f"Round {round}: of {n}")
+                print_pause(f"Round {round+1}: of {n}")
                 self.play_round()
                 self.keep_score()
         print_pause(f"Score:\n  {self.play_name}: {self.p1.score}\n"
@@ -156,7 +156,7 @@ class Game:
         move1 = self.move1
         move2 = self.move2
         if beats(move1, move2):
-            print_pause("*************Player *one* is the Winner************")
+            print_pause(f"******Player *{self.play_name}* is the Winner******")
             self.p1.score += 1
         elif move1 == move2:
             print_pause("********************** Draw! **********************")
@@ -192,5 +192,5 @@ if __name__ == '__main__':
     bot = random.choice([RandomPlayer(),
                         ReflectPlayer(),
                         CyclePlayer()])
-    game = Game(HumanPlayer(), bot)
+    game = Game(HumanPlayer(), ReflectPlayer())
     game.play_game()
