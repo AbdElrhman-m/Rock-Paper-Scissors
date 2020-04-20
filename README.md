@@ -26,9 +26,12 @@ python rps-starter-code.py
 or 
 
 ```
-python rps-starter-code.py
+python3 rps-starter-code.py
 ```
 4- Enjoy!
+## Additional Features
+- Able to enter player name
+- saving the scores in scores.txt
 
 ## This project created using:
 - python 3
