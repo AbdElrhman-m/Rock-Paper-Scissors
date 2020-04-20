@@ -14,15 +14,20 @@ class Player:
         super().__init__()
         self.score = 0
         self.valid_moves = ["rock", "paper", "scissors"]
+        self.my_move = None
+        self.their_move = None
+        
     def move(self):
         return 'rock'
 
     def learn(self, my_move, their_move):
-        pass
+        self.my_move = my_move
+        self.their_move = their_move
 
 class RandomPlayer(Player):
     def move(self):
         return random.choice(self.valid_moves)
+
 
 class HumanPlayer(Player):
     def move(self):
@@ -31,7 +36,10 @@ class HumanPlayer(Player):
             return player_move
         else:
             return self.move()
-        
+
+class ReflectPlayer(Player):
+    def move(self):
+        return self.last_move    
 
 def beats(one, two):
     return ((one == 'rock' and two == 'scissors') or
@@ -73,6 +81,7 @@ class Game:
         else:
             print("*************Player *Two* is the Winner************")
             self.p2.score += 1
+
 if __name__ == '__main__':
     game = Game(RandomPlayer(), HumanPlayer())
     game.play_game()
