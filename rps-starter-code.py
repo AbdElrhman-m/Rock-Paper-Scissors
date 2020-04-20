@@ -10,6 +10,10 @@ in this game"""
 
 
 class Player:
+    def __init__(self):
+        super().__init__()
+        self.score = 0
+
     def move(self):
         return 'rock'
 
@@ -30,7 +34,7 @@ class Game:
     def __init__(self, p1, p2):
         self.p1 = p1
         self.p2 = p2
-
+        self.score = 0
     def play_round(self):
         move1 = self.p1.move()
         move2 = self.p2.move()
@@ -41,11 +45,25 @@ class Game:
     def play_game(self):
         print("Game start!")
         for round in range(3):
+            print(" ")
             print(f"Round {round}:")
             self.play_round()
+            self.keep_score()
+        print(f"Player 1: {self.p1.score}  Player 2: {self.p2.score}")
+        print(" ")
         print("Game over!")
 
-
+    def keep_score(self):
+        move1 = self.p1.move()
+        move2 = self.p2.move()
+        if beats(move1, move2):
+            print("*************Player *one* is the Winner************")
+            self.p1.score += 1
+        elif move1 == move2:
+            print("********************** Draw! **********************")
+        else:
+            print("*************Player *Two* is the Winner************")
+            self.p2.score += 1
 if __name__ == '__main__':
     game = Game(RandomPlayer(), Player())
     game.play_game()
