@@ -67,6 +67,19 @@ class Game:
     def __init__(self, p1, p2):
         self.p1 = p1
         self.p2 = p2
+        self.game_type = None
+        self.valid_game = ['round', 'match']
+    def intro(self):
+        print("Welcome to The Game")
+        self.game_type = self.choose_game()
+        while self.game_type not in self.valid_game:
+            self.game_type = self.choose_game()
+        print(f"you have choosen to play a {self.game_type}")
+    
+    def choose_game(self):
+        print("\nWould you like to play a")
+        game_type = input("round, match > ").lower()
+        return game_type 
 
     def play_round(self):
         self.move1 = self.p1.move()
@@ -77,11 +90,16 @@ class Game:
 
     def play_game(self):
         print("Game start!")
-        for round in range(3):
-            print(" ")
-            print(f"Round {round}:")
+        self.intro()
+        if self.game_type == "round":
             self.play_round()
             self.keep_score()
+        else:
+            for round in range(3):
+                print(" ")
+                print(f"Round {round}:")
+                self.play_round()
+                self.keep_score()
         print(f"Score: Player 1: {self.p1.score}  Player 2: {self.p2.score}")
         print(" ")
         print("Game over!")
@@ -101,3 +119,5 @@ class Game:
 if __name__ == '__main__':
     game = Game(CyclePlayer(), HumanPlayer())
     game.play_game()
+
+
