@@ -44,6 +44,19 @@ class ReflectPlayer(Player):
         else:
             return self.their_move
 
+
+class CyclePlayer(Player):
+    def move(self):
+        if self.my_move == None:
+            return self.valid_moves[0]
+        else:
+            move_index = self.valid_moves.index(self.my_move)
+            if move_index == len(self.valid_moves)-1:
+                return self.valid_moves[0]
+            else:
+                return self.valid_moves[move_index+1]
+
+
 def beats(one, two):
     return ((one == 'rock' and two == 'scissors') or
             (one == 'scissors' and two == 'paper') or
@@ -56,11 +69,11 @@ class Game:
         self.p2 = p2
 
     def play_round(self):
-        move1 = self.p1.move()
-        move2 = self.p2.move()
-        print(f"Player 1: {move1}  Player 2: {move2}")
-        self.p1.learn(move1, move2)
-        self.p2.learn(move2, move1)
+        self.move1 = self.p1.move()
+        self.move2 = self.p2.move()
+        print(f"Player 1: {self.move1}  Player 2: {self.move2}")
+        self.p1.learn(self.move1, self.move2)
+        self.p2.learn(self.move2, self.move1)
 
     def play_game(self):
         print("Game start!")
@@ -74,8 +87,8 @@ class Game:
         print("Game over!")
 
     def keep_score(self):
-        move1 = self.p1.move()
-        move2 = self.p2.move()
+        move1 = self.move1
+        move2 = self.move2
         if beats(move1, move2):
             print("*************Player *one* is the Winner************")
             self.p1.score += 1
@@ -86,5 +99,5 @@ class Game:
             self.p2.score += 1
 
 if __name__ == '__main__':
-    game = Game(ReflectPlayer(), HumanPlayer())
+    game = Game(CyclePlayer(), HumanPlayer())
     game.play_game()
