@@ -8,7 +8,12 @@ moves = ['rock', 'paper', 'scissors']
 """The Player class is the parent class for all of the Players
 in this game"""
 
-
+def print_pause(message, delay=2):
+    # printes a message with delay
+    # default delay = 2
+    print(message)
+    t.sleep(delay)
+    
 class Player:
     def __init__(self):
         super().__init__()
@@ -84,37 +89,50 @@ class Game:
     def play_round(self):
         self.move1 = self.p1.move()
         self.move2 = self.p2.move()
-        print(f"Player 1: {self.move1}  Player 2: {self.move2}")
+        print_pause(f"Player 1: {self.move1}  Player 2: {self.move2}")
         self.p1.learn(self.move1, self.move2)
         self.p2.learn(self.move2, self.move1)
 
     def play_game(self):
-        print("Game start!")
+        print_pause("Game start!")
         self.intro()
         if self.game_type == "round":
             self.play_round()
             self.keep_score()
         else:
             for round in range(3):
-                print(" ")
-                print(f"Round {round}:")
+                print_pause(" ")
+                print_pause(f"Round {round}:")
                 self.play_round()
                 self.keep_score()
-        print(f"Score: Player 1: {self.p1.score}  Player 2: {self.p2.score}")
-        print(" ")
-        print("Game over!")
+        print_pause(f"Score: Player 1: {self.p1.score}  Player 2: {self.p2.score}")
+        print_pause(" ")
+        print_pause("Game over!")
+        print_pause(" ")
+        self.play_again()
 
     def keep_score(self):
         move1 = self.move1
         move2 = self.move2
         if beats(move1, move2):
-            print("*************Player *one* is the Winner************")
+            print_pause("*************Player *one* is the Winner************")
             self.p1.score += 1
         elif move1 == move2:
-            print("********************** Draw! **********************")
+            print_pause("********************** Draw! **********************")
         else:
-            print("*************Player *Two* is the Winner************")
+            print_pause("*************Player *Two* is the Winner************")
             self.p2.score += 1
+    def play_again(self):
+        choice = input("Would you like to play again? (y/n) > ").lower()
+        if choice in ['y', "n", "yes", "no"]:
+            if choice in ['y', 'yes']:
+                print_pause("Excellent! Restarting the game ...")
+                self.play_game()
+            elif choice in ['n', 'no']:
+                print_pause("Thanks for playing! See you next time.")
+        else:
+            print_pause("Try again!")
+            self.play_again()
 
 if __name__ == '__main__':
     game = Game(CyclePlayer(), HumanPlayer())
