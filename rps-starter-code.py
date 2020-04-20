@@ -39,7 +39,10 @@ class HumanPlayer(Player):
 
 class ReflectPlayer(Player):
     def move(self):
-        return self.last_move    
+        if self.their_move == None:
+            return random.choice(self.valid_moves)
+        else:
+            return self.their_move
 
 def beats(one, two):
     return ((one == 'rock' and two == 'scissors') or
